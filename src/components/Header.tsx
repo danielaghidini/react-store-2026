@@ -3,9 +3,10 @@ import { ShoppingCart, Menu, Search, Sun, Moon } from 'lucide-react';
 interface HeaderProps {
     toggleTheme: () => void;
     isDarkMode: boolean;
+    cartCount: number;
 }
 
-export function Header({ toggleTheme, isDarkMode }: HeaderProps) {
+export function Header({ toggleTheme, isDarkMode, cartCount }: HeaderProps) {
     return (
         <header className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 transition-colors duration-300">
             <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -45,9 +46,11 @@ export function Header({ toggleTheme, isDarkMode }: HeaderProps) {
 
                     <button className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group">
                         <ShoppingCart className="w-6 h-6 text-gray-700 dark:text-gray-200 group-hover:text-blue-600" />
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                            0
-                        </span>
+                        {cartCount > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
+                                {cartCount}
+                            </span>
+                        )}
                     </button>
                     <button className="hidden md:block px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                         Entrar

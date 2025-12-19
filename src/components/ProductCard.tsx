@@ -1,12 +1,21 @@
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Check } from 'lucide-react';
+import { useState } from 'react';
 
 interface ProductCardProps {
     image: string;
     title: string;
     price: number;
+    onAddToCart: () => void;
 }
 
-export function ProductCard({ image, title, price }: ProductCardProps) {
+export function ProductCard({ image, title, price, onAddToCart }: ProductCardProps) {
+    const [isAdded, setIsAdded] = useState(false);
+
+    function handleAddToCart() {
+        onAddToCart();
+        setIsAdded(true);
+    }
+
     return (
         <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
             <div className="relative overflow-hidden h-48">
@@ -30,9 +39,25 @@ export function ProductCard({ image, title, price }: ProductCardProps) {
                         </span>
                     </div>
 
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition-colors shadow-lg hover:shadow-blue-500/30 flex items-center justify-center gap-2">
-                        <ShoppingCart className="w-5 h-5" />
-                        <span className="hidden sm:inline font-medium">Adicionar</span>
+                    <button
+                        onClick={handleAddToCart}
+                        disabled={isAdded}
+                        className={`text-white p-3 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2 active:scale-95 transform ${isAdded
+                            ? 'bg-green-500 hover:bg-green-600 shadow-green-500/30'
+                            : 'bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/30'
+                            }`}
+                    >
+                        {isAdded ? (
+                            <>
+                                <Check className="w-5 h-5" />
+                                <span className="hidden sm:inline font-medium">Adicionado!</span>
+                            </>
+                        ) : (
+                            <>
+                                <ShoppingCart className="w-5 h-5" />
+                                <span className="hidden sm:inline font-medium">Adicionar</span>
+                            </>
+                        )}
                     </button>
                 </div>
             </div>
